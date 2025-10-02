@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
 import Footer from "@/components/Footer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
 
 // Mock data for now - will be replaced with real API
 const mockProperties = [
@@ -74,8 +75,6 @@ export default function Index() {
   const { data: properties, isLoading } = useQuery({
     queryKey: ["homepage-properties"],
     queryFn: async () => {
-      const { supabase } = await import("@/integrations/supabase/client");
-      
       const { data, error } = await supabase.functions.invoke("superhote-properties", {
         body: { params: "" },
       });
