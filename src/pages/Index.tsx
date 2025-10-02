@@ -239,7 +239,7 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold font-['Playfair_Display'] text-foreground mb-4">
-              Les petits + de l'Équipe d'Alsace
+              Les petits + de Clefs d'Alsace
             </h2>
             <h3 className="text-2xl font-semibold text-foreground">
               Pourquoi nous choisir ?
@@ -254,7 +254,7 @@ export default function Index() {
                 </svg>
               </div>
               <h4 className="text-xl font-bold font-['Playfair_Display'] text-foreground mb-4">
-                Meilleurs prix garantis sur equipedalsace.fr
+                Meilleurs prix garantis sur clefsdalsace.fr
               </h4>
               <p className="text-muted-foreground">
                 Si vous trouvez un meilleur tarif pour nos logements sur une autre plateforme (pour les mêmes dates), nous nous alignons sur ce tarif et vous recevrez un rabais de 5% complémentaire !
@@ -271,7 +271,7 @@ export default function Index() {
                 Une expérience unique
               </h4>
               <p className="text-muted-foreground">
-                Avec l'Équipe d'Alsace vous ne faites pas que louer un logement, vous passez un séjour exceptionnel : nos processus garantissent un taux de satisfaction de 4,99/5 en moyenne sur l'ensemble de nos logements.
+                Avec Clefs d'Alsace vous ne faites pas que louer un logement, vous passez un séjour exceptionnel : nos processus garantissent un taux de satisfaction de 4,99/5 en moyenne sur l'ensemble de nos logements.
               </p>
             </div>
 
@@ -285,7 +285,7 @@ export default function Index() {
                 Facture délivrée aux professionnels
               </h4>
               <p className="text-muted-foreground">
-                En passant par equipedalsace.fr, vous êtes éligibles aux factures professionnelles pour vous permettre de justifier la réservation dans votre comptabilité (remise à la fin du séjour).
+                En passant par clefsdalsace.fr, vous êtes éligibles aux factures professionnelles pour vous permettre de justifier la réservation dans votre comptabilité (remise à la fin du séjour).
               </p>
             </div>
           </div>
@@ -361,7 +361,7 @@ export default function Index() {
                 </svg>
               </summary>
               <p className="text-muted-foreground mt-4">
-                Nous aimons beaucoup les animaux mais ils sont malheureusement interdits dans nos appartements et maisons pour des raisons d'hygiène.
+                Oui, les animaux sont acceptés moyennant un supplément.
               </p>
             </details>
 
@@ -374,6 +374,18 @@ export default function Index() {
               </summary>
               <p className="text-muted-foreground mt-4">
                 Il est strictement interdit de fumer dans les logements.
+              </p>
+            </details>
+
+            <details className="bg-card p-6 rounded-xl shadow-card group">
+              <summary className="font-semibold text-foreground cursor-pointer list-none flex justify-between items-center">
+                Est-il possible d'organiser une soirée ?
+                <svg className="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="text-muted-foreground mt-4">
+                Non, les soirées sont strictement interdites.
               </p>
             </details>
           </div>
