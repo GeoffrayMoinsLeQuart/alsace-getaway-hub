@@ -28,7 +28,7 @@ export default function Header() {
     { path: "/", label: "Accueil" },
     { path: "/logements", label: "Nos Logements" },
     { path: "/services", label: "Services" },
-    { path: "/a-propos", label: "À Propos" },
+    // { path: "/a-propos", label: "À Propos" },
     { path: "/contact", label: "Contact" },
   ];
 

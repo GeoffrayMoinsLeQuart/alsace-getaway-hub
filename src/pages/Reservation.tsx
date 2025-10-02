@@ -1,80 +1,55 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default function Reservation() {
-  const [searchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
+	const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const webKey = "TziRKaU5fDux8BLLfljl4wB7V";
-    const checkin = searchParams.get("checkin");
-    const checkout = searchParams.get("checkout");
-    const adults = searchParams.get("adults") || "2";
-    const children = searchParams.get("children") || "0";
-    const lang = searchParams.get("lang") || "fr";
+	useEffect(() => {
+		const webKey = 'TziRKaU5fDux8BLLfljl4wB7V';
+		const checkin = searchParams.get('checkin');
+		const checkout = searchParams.get('checkout');
+		const adults = searchParams.get('adults') || '2';
+		const children = searchParams.get('children') || '0';
+		const lang = searchParams.get('lang') || 'fr';
 
-    let iframeUrl = "";
-    
-    if (checkin && checkout) {
-      iframeUrl = `https://app.superhote.com/#/get-available-rentals/${webKey}?startDate=${checkin}&endDate=${checkout}&adultsNumber=${adults}&childrenNumber=${children}&lang=${lang}`;
-    } else {
-      iframeUrl = `https://app.superhote.com/#/get-available-rentals/${webKey}?lang=${lang}`;
-    }
+		const iframe = document.getElementById('bookingengine') as HTMLIFrameElement;
+		if (iframe) {
+			iframe.src =
+				checkin && checkout
+					? `https://app.superhote.com/#/get-available-rentals/${webKey}?startDate=${checkin}&endDate=${checkout}&adultsNumber=${adults}&childrenNumber=${children}&lang=${lang}`
+					: `https://app.superhote.com/#/get-available-rentals/${webKey}?lang=${lang}`;
+		}
+	}, [searchParams]);
 
-    const iframe = document.getElementById('bookingengine') as HTMLIFrameElement;
-    if (iframe) {
-      iframe.src = iframeUrl;
-    }
-  }, [searchParams]);
+	return (
+		<div className='min-h-screen bg-background'>
+			<Header />
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <section className="pt-32 pb-8">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold font-['Playfair_Display'] text-foreground mb-4 text-center">
-            Réserver votre séjour
-          </h1>
-          <p className="text-lg text-muted-foreground text-center mb-8">
-            Sélectionnez vos dates et réservez directement en ligne
-          </p>
-        </div>
-      </section>
+			<section className='pt-20 relative'>
+				{isLoading && (
+					<div className='absolute inset-0 flex items-center justify-center bg-background z-10'>
+						<div className='text-center'>
+							<div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4'></div>
+							<p className='text-muted-foreground'>Chargement...</p>
+						</div>
+					</div>
+				)}
+				<iframe
+					id='bookingengine'
+					className='w-full border-0'
+					style={{ display: 'block', height: '100vh', minHeight: '800px' }}
+					src=''
+					width='100%'
+					allowFullScreen
+					sandbox='allow-scripts allow-forms allow-same-origin allow-presentation allow-top-navigation'
+					onLoad={() => setIsLoading(false)}
+				/>
+			</section>
 
-      {/* SuperHote Booking Engine */}
-      <section className="pb-8">
-        <div className="container mx-auto px-4">
-          <div className="relative w-full">
-            <style dangerouslySetInnerHTML={{__html: `
-              /* Cache la barre de recherche SuperHote */
-              #bookingengine {
-                min-height: 800px;
-              }
-              
-              /* Style pour cacher les éléments de recherche SuperHote si besoin */
-              iframe#bookingengine::after {
-                content: '';
-                display: block;
-              }
-            `}} />
-            
-            <iframe 
-              id="bookingengine"
-              className="w-full border-0 rounded-lg shadow-card"
-              style={{ display: 'block', minHeight: '800px' }}
-              src=""
-              width="100%"
-              height="5500"
-              allowFullScreen
-              sandbox="allow-scripts allow-forms allow-same-origin allow-presentation allow-top-navigation"
-            />
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
+			<Footer />
+		</div>
+	);
 }
