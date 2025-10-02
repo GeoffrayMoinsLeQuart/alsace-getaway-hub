@@ -1,0 +1,4 @@
+project_id = "hdmctgzrzvabuqagvjtn"
+
+[functions.superhote-properties]
+verify_jwt = false
