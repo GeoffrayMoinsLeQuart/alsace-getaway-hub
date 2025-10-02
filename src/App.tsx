@@ -12,6 +12,8 @@ import APropos from "./pages/APropos";
 import Services from "./pages/Services";
 import NotFound from "./pages/NotFound";
 import Confidentialite from "./pages/Confidentialite";
+import MentionsLegales from "./pages/MentionsLegales";
+import CGV from "./pages/CGV";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/cgv" element={<CGV />} />
           <Route path="/logements" element={<Logements />} />
           <Route path="/logement/:propertyKey" element={<LogementDetail />} />
           <Route path="/logements/:propertyKey" element={<LogementDetail />} />
