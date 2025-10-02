@@ -123,13 +123,15 @@ export default function Logements() {
   });
 
   const handleSearch = () => {
-    // The query will automatically refetch when dependencies change
+    // Redirect to reservation page with search parameters
     const params = new URLSearchParams();
     if (checkIn) params.set("checkin", checkIn);
     if (checkOut) params.set("checkout", checkOut);
     params.set("adults", adults);
     params.set("children", children);
-    window.history.pushState({}, "", `?${params.toString()}`);
+    
+    // Navigate to reservation page
+    window.location.href = `/reservation?${params.toString()}`;
   };
 
   return (
