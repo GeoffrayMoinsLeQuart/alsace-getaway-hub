@@ -2,73 +2,140 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function MentionsLegales() {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <h1 className="text-4xl font-display font-bold text-foreground mb-8">
-            Mentions Légales
-          </h1>
+	const sections = [
+		{
+			title: '1 – Éditeur du site',
+			content: (
+				<div className='space-y-2'>
+					<p>
+						<strong>Raison sociale :</strong> Les Clés d’Alsace (SASU)
+					</p>
+					<p>
+						<strong>Capital social :</strong> 100 €
+					</p>
+					<p>
+						<strong>Siège social :</strong> 5B Rue de Margnolles, 69300 Caluire-et-Cuire, France
+					</p>
+					<p>
+						<strong>SIREN :</strong> 938 391 158
+					</p>
+					<p>
+						<strong>RCS :</strong> Lyon
+					</p>
+					<p>
+						<strong>N° TVA intracommunautaire :</strong> FR07938391158
+					</p>
+					<p>
+						<strong>Email :</strong> contact@clefsdalsace.fr
+					</p>
+					<p>
+						<strong>Téléphone :</strong> 06 21 47 19 22
+					</p>
+				</div>
+			)
+		},
+		{
+			title: '2 – Hébergement',
+			content: (
+				<div className='space-y-2'>
+					<p>
+						Le site est hébergé par : <strong>Vercel Inc.</strong>
+					</p>
+					<p>Adresse : 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis</p>
+					<p>Infrastructure technique : Supabase (hébergement de la base de données)</p>
+				</div>
+			)
+		},
+		{
+			title: '3 – Propriété intellectuelle',
+			content: (
+				<>
+					<p>
+						L’ensemble du site relève de la législation française et internationale sur le droit d’auteur et la
+						propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents
+						téléchargeables et les représentations iconographiques et photographiques.
+					</p>
+					<p>
+						La reproduction de tout ou partie du site sur un support électronique ou papier est interdite sauf
+						autorisation expresse du directeur de la publication.
+					</p>
+				</>
+			)
+		},
+		{
+			title: '4 – Protection des données personnelles',
+			content: (
+				<>
+					<p>
+						Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi « Informatique et
+						Libertés » modifiée, vous disposez d’un droit d’accès, de rectification, de suppression et d’opposition
+						concernant vos données.
+					</p>
+					<p>
+						Pour plus d’informations, consultez notre{' '}
+						<a href='/confidentialite' className='text-primary hover:underline'>
+							Politique de confidentialité
+						</a>
+						.
+					</p>
+				</>
+			)
+		},
+		{
+			title: '5 – Responsabilité',
+			content: (
+				<>
+					<p>
+						Les Clés d’Alsace met tout en œuvre pour assurer l’exactitude et la mise à jour des informations diffusées
+						sur ce site. Toutefois, l’éditeur ne peut garantir l’exactitude, la complétude ou la disponibilité
+						permanente des contenus.
+					</p>
+					<p>
+						Le site peut contenir des liens vers d’autres sites dont l’éditeur n’a pas la maîtrise et décline toute
+						responsabilité quant à leur contenu.
+					</p>
+				</>
+			)
+		},
+		{
+			title: '6 – Crédits',
+			content: (
+				<p>
+					Conception et réalisation : <strong>Les Clés d’Alsace</strong>
+				</p>
+			)
+		}
+	];
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Éditeur du site</h2>
-            <div className="text-muted-foreground space-y-2">
-              <p><strong>Raison sociale :</strong> Clefs d'Alsace</p>
-              <p><strong>Adresse :</strong> Alsace, France</p>
-              <p><strong>Email :</strong> contact@clefsdalsace.fr</p>
-            </div>
-          </section>
+	return (
+		<div className='min-h-screen bg-background'>
+			<Header />
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Hébergement</h2>
-            <div className="text-muted-foreground space-y-2">
-              <p>Le site est hébergé par Lovable Cloud</p>
-              <p>Infrastructure basée sur Supabase</p>
-            </div>
-          </section>
+			<main className='container mx-auto px-4 mt-24 mb-24'>
+				<div className='max-w-4xl mx-auto space-y-12'>
+					<h1 className='text-4xl font-display font-bold text-foreground mb-6'>Mentions Légales</h1>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Propriété intellectuelle</h2>
-            <p className="text-muted-foreground">
-              L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. 
-              Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.
-            </p>
-            <p className="text-muted-foreground">
-              La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication.
-            </p>
-          </section>
+					{sections.map((sec, i) => (
+						<section key={i} className='space-y-4'>
+							<h2 className='text-2xl font-semibold text-foreground'>{sec.title}</h2>
+							<div className='text-muted-foreground space-y-2'>{sec.content}</div>
+						</section>
+					))}
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Protection des données personnelles</h2>
-            <p className="text-muted-foreground">
-              Conformément à la loi "Informatique et Libertés" du 6 janvier 1978 modifiée et au Règlement Général sur la Protection des Données (RGPD), 
-              vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition aux données personnelles vous concernant.
-            </p>
-            <p className="text-muted-foreground">
-              Pour exercer ce droit, contactez-nous à : contact@clefsdalsace.fr
-            </p>
-          </section>
+					<div className='mt-12 p-6 bg-muted rounded-lg'>
+						<p className='text-sm text-muted-foreground'>
+							Dernière mise à jour :{' '}
+							{new Date().toLocaleDateString('fr-FR', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric'
+							})}
+						</p>
+					</div>
+				</div>
+			</main>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Cookies</h2>
-            <p className="text-muted-foreground">
-              Ce site utilise des cookies pour améliorer l'expérience utilisateur et réaliser des statistiques de visites. 
-              En naviguant sur ce site, vous acceptez l'utilisation de cookies.
-            </p>
-          </section>
-
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Crédits</h2>
-            <p className="text-muted-foreground">
-              Conception et réalisation : Clefs d'Alsace
-            </p>
-          </section>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
+			<Footer />
+		</div>
+	);
 }
