@@ -70,14 +70,34 @@ const mockProperties = [
 ];
 
 export default function Index() {
-  // This will be replaced with real API call to SuperHote
+  // Fetch properties from SuperHote API via edge function
   const { data: properties, isLoading } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["homepage-properties"],
     queryFn: async () => {
-      // TODO: Replace with actual SuperHote API call
-      // const response = await fetch('https://app.superhote.com/api/v2/get-user-rentals/TziRKaU5fDux8BLLfljl4wB7V');
-      // return response.json();
-      return mockProperties;
+      const { supabase } = await import("@/integrations/supabase/client");
+      
+      const { data, error } = await supabase.functions.invoke("superhote-properties", {
+        body: { params: "" },
+      });
+
+      if (error) {
+        console.error("Error fetching properties:", error);
+        return mockProperties;
+      }
+      
+      // Transform SuperHote data to our format
+      const transformedData = data?.rentals?.map((property: any) => ({
+        id: property.id?.toString() || property.property_key,
+        title: property.name,
+        city: property.city,
+        image: property.photos?.[0]?.name || mockProperties[0].image,
+        price: property.min_price,
+        capacity: property.capacity,
+        bedrooms: property.bedroom_count,
+        surface: property.surface || 65,
+      })) || [];
+      
+      return transformedData.length > 0 ? transformedData.slice(0, 6) : mockProperties;
     },
   });
 

@@ -95,19 +95,24 @@ export default function Logements() {
         body: { params: params.toString() },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching properties:", error);
+        return mockProperties;
+      }
       
       // Transform SuperHote data to our format
-      return data?.map((property: any) => ({
-        id: property.id || property._id,
-        title: property.name || property.title,
-        city: property.city || "Alsace",
-        image: property.photos?.[0] || property.image || mockProperties[0].image,
-        price: property.price || property.pricePerNight || 0,
-        capacity: property.maxGuests || property.capacity || 2,
-        bedrooms: property.bedrooms || 1,
-        surface: property.surface || property.squareMeters || 0,
-      })) || mockProperties;
+      const transformedData = data?.rentals?.map((property: any) => ({
+        id: property.id?.toString() || property.property_key,
+        title: property.name,
+        city: property.city,
+        image: property.photos?.[0]?.name || mockProperties[0].image,
+        price: property.min_price,
+        capacity: property.capacity,
+        bedrooms: property.bedroom_count,
+        surface: property.surface || 65,
+      })) || [];
+      
+      return transformedData.length > 0 ? transformedData : mockProperties;
     },
   });
 
