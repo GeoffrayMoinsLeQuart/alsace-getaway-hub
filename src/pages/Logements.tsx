@@ -7,7 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar, Users, Search } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 // Mock data - will be replaced with SuperHote API
 const mockProperties = [
@@ -80,21 +81,33 @@ export default function Logements() {
   const [adults, setAdults] = useState(searchParams.get("adults") || "2");
   const [children, setChildren] = useState(searchParams.get("children") || "0");
 
-  // Fetch properties based on search criteria
+  // Fetch properties from SuperHote API via edge function
   const { data: properties, isLoading } = useQuery({
     queryKey: ["properties", checkIn, checkOut, adults, children],
     queryFn: async () => {
-      // TODO: Replace with actual SuperHote API call
-      // if (checkIn && checkOut) {
-      //   const response = await fetch(
-      //     `https://app.superhote.com/api/v2/get-available-rentals/TziRKaU5fDux8BLLfljl4wB7V?startDate=${checkIn}&endDate=${checkOut}&adultsNumber=${adults}&childrenNumber=${children}`
-      //   );
-      //   return response.json();
-      // } else {
-      //   const response = await fetch('https://app.superhote.com/api/v2/get-user-rentals/TziRKaU5fDux8BLLfljl4wB7V');
-      //   return response.json();
-      // }
-      return mockProperties;
+      const params = new URLSearchParams();
+      if (checkIn) params.set("checkin", checkIn);
+      if (checkOut) params.set("checkout", checkOut);
+      params.set("adults", adults);
+      params.set("children", children);
+
+      const { data, error } = await supabase.functions.invoke("superhote-properties", {
+        body: { params: params.toString() },
+      });
+
+      if (error) throw error;
+      
+      // Transform SuperHote data to our format
+      return data?.map((property: any) => ({
+        id: property.id || property._id,
+        title: property.name || property.title,
+        city: property.city || "Alsace",
+        image: property.photos?.[0] || property.image || mockProperties[0].image,
+        price: property.price || property.pricePerNight || 0,
+        capacity: property.maxGuests || property.capacity || 2,
+        bedrooms: property.bedrooms || 1,
+        surface: property.surface || property.squareMeters || 0,
+      })) || mockProperties;
     },
   });
 
