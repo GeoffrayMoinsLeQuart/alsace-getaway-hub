@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import PropertyCard from "@/components/PropertyCard";
 import Footer from "@/components/Footer";
@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar, Users, Search } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 // Mock data - will be replaced with SuperHote API
@@ -75,11 +75,21 @@ const mockProperties = [
 ];
 
 export default function Logements() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  
   const [checkIn, setCheckIn] = useState(searchParams.get("checkin") || "");
   const [checkOut, setCheckOut] = useState(searchParams.get("checkout") || "");
   const [adults, setAdults] = useState(searchParams.get("adults") || "2");
   const [children, setChildren] = useState(searchParams.get("children") || "0");
+
+  // Sync state with URL params when they change
+  useEffect(() => {
+    setCheckIn(searchParams.get("checkin") || "");
+    setCheckOut(searchParams.get("checkout") || "");
+    setAdults(searchParams.get("adults") || "2");
+    setChildren(searchParams.get("children") || "0");
+  }, [searchParams]);
 
   // Fetch properties from SuperHote API via edge function
   const { data: properties, isLoading } = useQuery({
@@ -124,15 +134,14 @@ export default function Logements() {
   });
 
   const handleSearch = () => {
-    // Redirect to reservation page with search parameters
+    // Update URL params which will trigger a refetch
     const params = new URLSearchParams();
     if (checkIn) params.set("checkin", checkIn);
     if (checkOut) params.set("checkout", checkOut);
     params.set("adults", adults);
     params.set("children", children);
     
-    // Navigate to reservation page
-    window.location.href = `/reservation?${params.toString()}`;
+    setSearchParams(params);
   };
 
   return (
