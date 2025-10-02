@@ -124,15 +124,11 @@ export default function Logements() {
   });
 
   const handleSearch = () => {
-    // Redirect to reservation page with search parameters
-    const params = new URLSearchParams();
-    if (checkIn) params.set("checkin", checkIn);
-    if (checkOut) params.set("checkout", checkOut);
-    params.set("adults", adults);
-    params.set("children", children);
-    
-    // Navigate to reservation page
-    window.location.href = `/reservation?${params.toString()}`;
+    // Scroll to iframe section
+    const iframe = document.getElementById('bookingengine');
+    if (iframe) {
+      iframe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -216,33 +212,20 @@ export default function Logements() {
         </div>
       </section>
 
-      {/* Properties Grid */}
-      <section className="py-16">
+      {/* SuperHote Booking Engine */}
+      <section className="pb-8">
         <div className="container mx-auto px-4">
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="space-y-4">
-                  <Skeleton className="aspect-[4/3] w-full" />
-                  <Skeleton className="h-6 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <>
-              <div className="mb-8">
-                <p className="text-lg text-muted-foreground">
-                  {properties?.length || 0} logement(s) disponible(s)
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
-                {properties?.map((property) => (
-                  <PropertyCard key={property.id} {...property} />
-                ))}
-              </div>
-            </>
-          )}
+          <div className="relative w-full">
+            <iframe 
+              id="bookingengine"
+              className="w-full border-0 rounded-lg shadow-card"
+              style={{ display: 'block', height: '100vh', minHeight: '800px' }}
+              src={`https://app.superhote.com/#/get-available-rentals/TziRKaU5fDux8BLLfljl4wB7V${checkIn && checkOut ? `?startDate=${checkIn}&endDate=${checkOut}&adultsNumber=${adults}&childrenNumber=${children}` : ''}${searchParams.get("lang") ? `&lang=${searchParams.get("lang")}` : '&lang=fr'}`}
+              width="100%"
+              allowFullScreen
+              sandbox="allow-scripts allow-forms allow-same-origin allow-presentation allow-top-navigation"
+            />
+          </div>
         </div>
       </section>
 
