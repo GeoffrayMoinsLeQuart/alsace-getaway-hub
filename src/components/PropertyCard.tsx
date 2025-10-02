@@ -12,6 +12,7 @@ interface PropertyCardProps {
   capacity: number;
   bedrooms: number;
   surface: number;
+  propertyKey?: string;
 }
 
 export default function PropertyCard({
@@ -23,10 +24,14 @@ export default function PropertyCard({
   capacity,
   bedrooms,
   surface,
+  propertyKey,
 }: PropertyCardProps) {
+  // Use propertyKey if available, otherwise fallback to id
+  const linkTo = propertyKey ? `/logement/${propertyKey}` : `/logements/${id}`;
+  
   return (
     <Card className="group overflow-hidden hover:shadow-elegant transition-all duration-300 bg-card">
-      <Link to={`/logements/${id}`}>
+      <Link to={linkTo}>
         <div className="relative aspect-[4/3] overflow-hidden">
           <img
             src={image}

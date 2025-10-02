@@ -107,6 +107,7 @@ export default function Logements() {
       const transformedData = Array.isArray(rentals)
         ? rentals.map((property: any) => ({
             id: property.id?.toString() || property.property_key,
+            propertyKey: property.property_key,
             title: property.name,
             city: property.city,
             image: property.photos?.[0]?.name || mockProperties[0].image,

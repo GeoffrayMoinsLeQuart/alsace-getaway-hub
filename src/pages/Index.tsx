@@ -87,6 +87,7 @@ export default function Index() {
       // Transform SuperHote data to our format
       const transformedData = data?.rentals?.map((property: any) => ({
         id: property.id?.toString() || property.property_key,
+        propertyKey: property.property_key,
         title: property.name,
         city: property.city,
         image: property.photos?.[0]?.name || mockProperties[0].image,
