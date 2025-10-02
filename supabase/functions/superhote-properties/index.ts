@@ -14,11 +14,12 @@ serve(async (req) => {
   }
 
   try {
-    const url = new URL(req.url);
-    const checkIn = url.searchParams.get('checkin');
-    const checkOut = url.searchParams.get('checkout');
-    const adults = url.searchParams.get('adults') || '2';
-    const children = url.searchParams.get('children') || '0';
+    const { params } = await req.json();
+    const urlParams = new URLSearchParams(params);
+    const checkIn = urlParams.get('checkin');
+    const checkOut = urlParams.get('checkout');
+    const adults = urlParams.get('adults') || '2';
+    const children = urlParams.get('children') || '0';
 
     let apiUrl = `https://app.superhote.com/api/v2/get-user-rentals/${SUPERHOTE_WEB_KEY}`;
     
