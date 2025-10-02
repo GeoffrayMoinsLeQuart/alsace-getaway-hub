@@ -26,8 +26,8 @@ export default function PropertyCard({
   surface,
   propertyKey,
 }: PropertyCardProps) {
-  // Use propertyKey if available, otherwise fallback to id
-  const linkTo = propertyKey ? `/logement/${propertyKey}` : `/logements/${id}`;
+  // Always use propertyKey if available for the link
+  const linkTo = `/logements/${propertyKey || id}`;
   
   return (
     <Card className="group overflow-hidden hover:shadow-elegant transition-all duration-300 bg-card">
