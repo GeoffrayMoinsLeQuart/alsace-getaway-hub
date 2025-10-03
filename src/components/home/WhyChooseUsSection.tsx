@@ -13,7 +13,7 @@ const advantages = [
 	},
 	{
 		title: 'Une expérience unique',
-		text: "Avec Clés d'Alsace vous ne faites pas que louer un logement, vous passez un séjour exceptionnel : nos processus garantissent un taux de satisfaction de 4,99/5 en moyenne.",
+		text: "Avec Clés d'Alsace vous ne faites pas que louer un logement, vous passez un séjour exceptionnel : nos processus garantissent un taux de satisfaction de 4,8/5 en moyenne.",
 		icon: (
 			<path
 				strokeLinecap='round'
